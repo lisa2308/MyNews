@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1dp"/>
+
+
+        <TextView
+            android:text="TOP STORIES "
+            android:layout_height="0dp"
+            android:layout_weight="1dp"/>
+
+        <TextView
+            android:text="MOST POPULAR"
+            android:layout_height="0dp"
+            android:layout_weight="1dp"/>
+
+        <TextView
+            android:text="BUISNESS"
+            android:layout_height="0dp"
+            android:layout_weight="1dp"/>
+
+    </TableRow>
+</TableLayout>
