@@ -11,7 +11,6 @@ public class MainActivity extends AppCompatActivity {
     private MyAdapter mAdapter;
     private ViewPager mPager;
     private TabLayout mTabLayout;
-    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +22,12 @@ public class MainActivity extends AppCompatActivity {
         mPager.setAdapter(mAdapter);
 
         mTabLayout = findViewById(R.id.activity_main_tablayout);
-        mRecyclerView = findViewById(R.id.activity_main_recycler_view);
+        mTabLayout.setupWithViewPager(mPager);
+        mTabLayout.getTabAt(0).setText("1");
+        mTabLayout.getTabAt(1).setText("2");
+        mTabLayout.getTabAt(2).setText("3");
+
+
 
     }
 }
