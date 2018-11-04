@@ -16,7 +16,7 @@ public class MyAdapter extends FragmentPagerAdapter {
         return NUMBER_OF_PAGES;
     }
 
-    // ASSOCIATE MOOD WITH ITS POSITION AND COLOR //
+    //PAGES CREATION//
     @Override
     public Fragment getItem(int position) {
 

@@ -6,9 +6,11 @@ public class Article {
     private String description;
     private String date;
 
+    //CONSTRUCTOR//
     public Article(){
     }
 
+    //ARTICLE CONSTRUCTOR WITH ARGUMENTS//
     public Article(String photoUrl, String title, String description, String date) {
         this.photoUrl = photoUrl;
         this.title = title;
@@ -16,6 +18,7 @@ public class Article {
         this.date = date;
     }
 
+    //GETTERS AND SETTERS//
     public String getPhotoUrl(){
         return photoUrl;
     }

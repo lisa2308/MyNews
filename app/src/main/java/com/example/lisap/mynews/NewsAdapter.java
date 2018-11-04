@@ -6,6 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -18,7 +22,20 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
     }
 
     public static class NewsHolder extends RecyclerView.ViewHolder{
-        public NewsHolder (View view) {super(view);}
+        TextView title;
+        TextView date;
+        ImageView image;
+        TextView description;
+
+        public NewsHolder (View view) {
+            super(view);
+            title = view.findViewById(R.id.fragment_news_item_title);
+            date = view.findViewById(R.id.fragment_news_item_date);
+            image = view.findViewById(R.id.fragment_news_item_image);
+            description = view.findViewById(R.id.fragment_news_item_description);
+
+        }
+
     }
 
     @Override
@@ -28,9 +45,22 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
         return new NewsHolder(itemView);
     }
 
+    //passe autant de fois qu'il y' a d'item//
     @Override
-    public void onBindViewHolder(final NewsHolder holder, final int position){}
+    public void onBindViewHolder(final NewsHolder holder, final int position) {
 
+        //position liée à la ligne donc change toute seule//
+        Article article = articleList.get(position);
+
+        Picasso.get().load(article.getPhotoUrl()).into(holder.image);
+
+        holder.title.setText(article.getTitle());
+        holder.description.setText(article.getDescription());
+        holder.date.setText(article.getDate());
+
+    }
+
+    //ITEM'S NUMBER//
     @Override
     public int getItemCount(){
         return articleList.size();

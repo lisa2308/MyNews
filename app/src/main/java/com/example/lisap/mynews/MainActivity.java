@@ -17,11 +17,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //CREATE ADAPTER FOR VIEWPAGER//
         mAdapter = new MyAdapter(getSupportFragmentManager());
         mPager = findViewById(R.id.activity_main_viewpager);
         mPager.setAdapter(mAdapter);
 
+        //TABLAYOUT CREATION//
         mTabLayout = findViewById(R.id.activity_main_tablayout);
+        //ASSOCIATE VIEWPAGER WITH TABLAYOUT//
         mTabLayout.setupWithViewPager(mPager);
         mTabLayout.getTabAt(0).setText("1");
         mTabLayout.getTabAt(1).setText("2");
