@@ -4,8 +4,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.lisap.mynews.entities.Result;
 import android.support.v7.widget.RecyclerView;
-
 public class MainActivity extends AppCompatActivity {
 
     private MyAdapter mAdapter;
@@ -16,6 +16,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Result result = new Result();
+        result.getStatus();
+        result.getResponse().getMeta().getHits();
+
+
+
+
+
+
 
         //CREATE ADAPTER FOR VIEWPAGER//
         mAdapter = new MyAdapter(getSupportFragmentManager());

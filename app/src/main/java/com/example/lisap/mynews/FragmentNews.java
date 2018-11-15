@@ -83,6 +83,9 @@ public class FragmentNews extends Fragment {
         mRecyclerView.setAdapter(newsAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
+
+
         return v;
     }
 }
