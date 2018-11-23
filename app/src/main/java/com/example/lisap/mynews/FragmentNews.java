@@ -21,9 +21,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.lisap.mynews.entities.Result;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragmentNews extends Fragment {
 
@@ -34,6 +42,8 @@ public class FragmentNews extends Fragment {
     private int mColor;
 
     private RecyclerView mRecyclerView;
+
+
 
 
     // PASS DATA TO CONSTRUCTOR //
@@ -66,25 +76,32 @@ public class FragmentNews extends Fragment {
         View v = inflater.inflate(R.layout.fragment_news, container, false);
         mRecyclerView = v.findViewById(R.id.fragment_news_recycler_view);
 
-        Article article = new Article("https://www.maxizoo.fr/wp-content/uploads/2016/06/aliments-Lapin.jpg", "Lapin mignon", "Le lapin le plus mignon du monde ", "04/11/18");
-        Article article1 = new Article("https://www.vulgaris-medical.com/sites/default/files/styles/big-lightbox/public/field/image/actualites/2018/02/26/le-chat-source-de-bienfaits-pour-votre-sante_1.jpg?itok=839wZP-t", "Un petit chat", "Les chats vont dominer le monde", "14/10/18");
-        Article article2 = new Article("https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=imgres&cd=&cad=rja&uact=8&ved=2ahUKEwih9d-An7veAhVCqxoKHYfQABYQjRx6BAgBEAU&url=https%3A%2F%2Ffr.wikipedia.org%2Fwiki%2FSoleil&psig=AOvVaw1ZcVwInQKsvWSoBSGUXNIz&ust=1541438225645031", "Réchauffement climatique", "Le soleil", "08/10/18");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.nytimes.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        List<Article> articleList = new ArrayList<>();
-        articleList.add(article);
-        articleList.add(article1);
-        articleList.add(article2);
+        //enqueue liste attente
+        NewYorkTimesService service = retrofit.create(NewYorkTimesService.class);
+        Call<Result> resultCall = service.getResult("trump");
+        resultCall.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                Result result = response.body();
 
-       // Article article3 = articleList.get(0);
+                //CREATE RECYCLER ADAPTER//
+                NewsAdapter newsAdapter = new NewsAdapter(result.getResponse().getDocs());
+                //ASSOCIATE ADAPTER WITH RECYCLER//
+                mRecyclerView.setAdapter(newsAdapter);
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //CREATE RECYCLER ADAPTER//
-        NewsAdapter newsAdapter = new NewsAdapter(articleList);
-        //ASSOCIATE ADAPTER WITH RECYCLER//
-        mRecyclerView.setAdapter(newsAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            }
 
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
 
-
+            }
+        });
 
         return v;
     }

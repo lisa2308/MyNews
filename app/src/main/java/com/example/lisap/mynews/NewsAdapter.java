@@ -9,16 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.lisap.mynews.entities.Doc;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
 
-    List<Article> articleList;
+    List<Doc> docList;
 
-    public NewsAdapter(List<Article> articleList){
-        this.articleList = articleList;
+    public NewsAdapter(List<Doc> docList){
+        this.docList = docList;
     }
 
     public static class NewsHolder extends RecyclerView.ViewHolder{
@@ -50,20 +51,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
     public void onBindViewHolder(final NewsHolder holder, final int position) {
 
         //position liée à la ligne donc change toute seule//
-        Article article = articleList.get(position);
+        Doc doc = docList.get(position);
 
-        Picasso.get().load(article.getPhotoUrl()).into(holder.image);
+        if (doc.getMultimedia()!=null) {
+            Picasso.get().load(doc.getMultimedia().get(0).getUrl()).into(holder.image);
+        }
 
-        holder.title.setText(article.getTitle());
-        holder.description.setText(article.getDescription());
-        holder.date.setText(article.getDate());
-
+        holder.title.setText(doc.getHeadline().getMain());
+        holder.description.setText(doc.getSnippet());
+        holder.date.setText("");
     }
 
     //ITEM'S NUMBER//
     @Override
     public int getItemCount(){
-        return articleList.size();
+        return docList.size();
     }
 }
 

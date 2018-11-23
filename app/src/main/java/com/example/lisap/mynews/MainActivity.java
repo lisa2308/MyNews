@@ -17,16 +17,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Result result = new Result();
-        result.getStatus();
-        result.getResponse().getMeta().getHits();
-
-
-
-
-
-
-
         //CREATE ADAPTER FOR VIEWPAGER//
         mAdapter = new MyAdapter(getSupportFragmentManager());
         mPager = findViewById(R.id.activity_main_viewpager);
@@ -39,8 +29,5 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.getTabAt(0).setText("1");
         mTabLayout.getTabAt(1).setText("2");
         mTabLayout.getTabAt(2).setText("3");
-
-
-
     }
 }
