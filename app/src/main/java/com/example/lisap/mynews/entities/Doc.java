@@ -1,6 +1,8 @@
 
 package com.example.lisap.mynews.entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Doc {
@@ -13,6 +15,7 @@ public class Doc {
     private List<Multimedium> multimedia = null;
     private Headline headline;
     private List<Keyword> keywords = null;
+    @SerializedName("pub_date")
     private String pubDate;
     private String documentType;
     private String typeOfMaterial;

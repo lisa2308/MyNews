@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = findViewById(R.id.activity_main_tablayout);
         //ASSOCIATE VIEWPAGER WITH TABLAYOUT//
         mTabLayout.setupWithViewPager(mPager);
-        mTabLayout.getTabAt(0).setText("1");
-        mTabLayout.getTabAt(1).setText("2");
-        mTabLayout.getTabAt(2).setText("3");
+        mTabLayout.getTabAt(0).setText("TOP STORIES");
+        mTabLayout.getTabAt(1).setText("MOST POPULAR");
+        mTabLayout.getTabAt(2).setText("BUISNESS");
     }
 }

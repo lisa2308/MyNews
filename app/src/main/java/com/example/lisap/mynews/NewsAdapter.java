@@ -12,6 +12,10 @@ import android.widget.TextView;
 import com.example.lisap.mynews.entities.Doc;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
@@ -59,9 +63,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
 
         holder.title.setText(doc.getHeadline().getMain());
         holder.description.setText(doc.getSnippet());
-        holder.date.setText(doc.getPubDate());
 
-        System.out.println(doc.getPubDate());
+        DateFormat dateFormatInput = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = dateFormatInput.parse(doc.getPubDate());
+            DateFormat dateFormatOutput = new SimpleDateFormat("dd/MM/yy");
+            holder.date.setText(dateFormatOutput.format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     //ITEM'S NUMBER//
