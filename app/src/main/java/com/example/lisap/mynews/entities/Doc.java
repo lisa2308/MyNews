@@ -18,7 +18,7 @@ public class Doc {
     private String typeOfMaterial;
     private String id;
     private Integer wordCount;
-    private Integer score;
+    private Double score;
 
     public String getWebUrl() {
         return webUrl;
@@ -124,12 +124,31 @@ public class Doc {
         this.wordCount = wordCount;
     }
 
-    public Integer getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 
+    @Override
+    public String toString() {
+        return "Doc{" +
+                "webUrl='" + webUrl + '\'' +
+                ", snippet='" + snippet + '\'' +
+                ", printPage='" + printPage + '\'' +
+                ", blog=" + blog +
+                ", source='" + source + '\'' +
+                ", multimedia=" + multimedia +
+                ", headline=" + headline +
+                ", keywords=" + keywords +
+                ", pubDate='" + pubDate + '\'' +
+                ", documentType='" + documentType + '\'' +
+                ", typeOfMaterial='" + typeOfMaterial + '\'' +
+                ", id='" + id + '\'' +
+                ", wordCount=" + wordCount +
+                ", score=" + score +
+                '}';
+    }
 }

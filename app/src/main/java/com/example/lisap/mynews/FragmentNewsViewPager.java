@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class MyAdapter extends FragmentPagerAdapter {
+public class FragmentNewsViewPager extends FragmentPagerAdapter {
     final int NUMBER_OF_PAGES = 3;
 
-    public MyAdapter(FragmentManager fm) {
+    public FragmentNewsViewPager(FragmentManager fm) {
         super(fm);
     }
 
@@ -22,11 +22,11 @@ public class MyAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                return FragmentNews.newInstance(0,0);
+                return FragmentNews.newInstance(0);
             case 1:
-                return FragmentNews.newInstance(0,0);
+                return FragmentNews.newInstance(1);
             case 2:
-                return FragmentNews.newInstance(0,0);
+                return FragmentNews.newInstance(2);
 
             default:
                 return null;

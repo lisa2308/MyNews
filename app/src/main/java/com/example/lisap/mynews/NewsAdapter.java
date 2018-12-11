@@ -54,12 +54,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
         Doc doc = docList.get(position);
 
         if (doc.getMultimedia()!=null) {
-            Picasso.get().load(doc.getMultimedia().get(0).getUrl()).into(holder.image);
+            Picasso.get().load("https://www.nytimes.com/" + doc.getMultimedia().get(0).getUrl()).into(holder.image);
         }
 
         holder.title.setText(doc.getHeadline().getMain());
         holder.description.setText(doc.getSnippet());
-        holder.date.setText("");
+        holder.date.setText(doc.getPubDate());
+
+        System.out.println(doc.getPubDate());
     }
 
     //ITEM'S NUMBER//

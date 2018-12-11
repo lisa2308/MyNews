@@ -68,4 +68,16 @@ public class Headline {
         this.sub = sub;
     }
 
+    @Override
+    public String toString() {
+        return "Headline{" +
+                "main='" + main + '\'' +
+                ", kicker='" + kicker + '\'' +
+                ", contentKicker=" + contentKicker +
+                ", printHeadline=" + printHeadline +
+                ", name=" + name +
+                ", seo=" + seo +
+                ", sub=" + sub +
+                '}';
+    }
 }

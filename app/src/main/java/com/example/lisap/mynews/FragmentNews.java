@@ -35,23 +35,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragmentNews extends Fragment {
 
-    private static final String DRAWABLE = "image";
-    private static final String MY_COLOR_KEY = "color";
+    private static final String POSITION = "position";
 
-    private int mImage;
-    private int mColor;
+    private int mPosition;
 
     private RecyclerView mRecyclerView;
 
-
-
-
     // PASS DATA TO CONSTRUCTOR //
-    public static FragmentNews newInstance(int image, int color) {
+    public static FragmentNews newInstance(int position) {
         FragmentNews f = new FragmentNews();
         Bundle args = new Bundle();
-        args.putInt(DRAWABLE, image);
-        args.putInt(MY_COLOR_KEY, color);
+        args.putInt(POSITION, position);
         f.setArguments(args);
         return f;
     }
@@ -61,11 +55,9 @@ public class FragmentNews extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mImage = getArguments().getInt(DRAWABLE);
-            mColor = getArguments().getInt(MY_COLOR_KEY);
+            mPosition = getArguments().getInt(POSITION);
         } else {
-            mImage = 0;
-            mColor = Color.BLACK;
+            mPosition = 0;
         }
     }
 
@@ -74,34 +66,44 @@ public class FragmentNews extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_news, container, false);
-        mRecyclerView = v.findViewById(R.id.fragment_news_recycler_view);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.nytimes.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        if(mPosition ==0) {
+            mRecyclerView = v.findViewById(R.id.fragment_news_recycler_view);
 
-        //enqueue liste attente
-        NewYorkTimesService service = retrofit.create(NewYorkTimesService.class);
-        Call<Result> resultCall = service.getResult("trump");
-        resultCall.enqueue(new Callback<Result>() {
-            @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
-                Result result = response.body();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.nytimes.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-                //CREATE RECYCLER ADAPTER//
-                NewsAdapter newsAdapter = new NewsAdapter(result.getResponse().getDocs());
-                //ASSOCIATE ADAPTER WITH RECYCLER//
-                mRecyclerView.setAdapter(newsAdapter);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            //enqueue liste attente
+            NewYorkTimesService service = retrofit.create(NewYorkTimesService.class);
+            Call<Result> resultCall = service.getResult("trump");
+            resultCall.enqueue(new Callback<Result>() {
+                @Override
+                public void onResponse(Call<Result> call, Response<Result> response) {
+                    Result result = response.body();
 
-            }
+                    //CREATE RECYCLER ADAPTER//
+                    NewsAdapter newsAdapter = null;
+                    if (result != null) {
+                        newsAdapter = new NewsAdapter(result.getResponse().getDocs());
+                        //ASSOCIATE ADAPTER WITH RECYCLER//
+                        mRecyclerView.setAdapter(newsAdapter);
+                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-            @Override
-            public void onFailure(Call<Result> call, Throwable t) {
+                    }
 
-            }
-        });
+                }
+
+                @Override
+                public void onFailure(Call<Result> call, Throwable t) {
+
+                }
+            });
+        }
+
+        if(mPosition ==1) {
+        }
 
         return v;
     }

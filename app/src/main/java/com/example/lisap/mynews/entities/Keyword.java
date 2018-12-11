@@ -41,4 +41,13 @@ public class Keyword {
         this.major = major;
     }
 
+    @Override
+    public String toString() {
+        return "Keyword{" +
+                "name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                ", rank=" + rank +
+                ", major='" + major + '\'' +
+                '}';
+    }
 }

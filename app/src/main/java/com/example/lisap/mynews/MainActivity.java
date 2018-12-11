@@ -4,11 +4,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.lisap.mynews.entities.Result;
-import android.support.v7.widget.RecyclerView;
+
 public class MainActivity extends AppCompatActivity {
 
-    private MyAdapter mAdapter;
+    private FragmentNewsViewPager mAdapter;
     private ViewPager mPager;
     private TabLayout mTabLayout;
 
@@ -18,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //CREATE ADAPTER FOR VIEWPAGER//
-        mAdapter = new MyAdapter(getSupportFragmentManager());
+        mAdapter = new FragmentNewsViewPager(getSupportFragmentManager());
         mPager = findViewById(R.id.activity_main_viewpager);
         mPager.setAdapter(mAdapter);
 
