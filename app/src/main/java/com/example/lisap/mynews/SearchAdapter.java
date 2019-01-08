@@ -1,7 +1,5 @@
 package com.example.lisap.mynews;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,21 +16,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHolder>{
 
     List<Doc> docList;
 
-    public NewsAdapter(List<Doc> docList){
+    public SearchAdapter(List<Doc> docList){
         this.docList = docList;
     }
 
-    public static class NewsHolder extends RecyclerView.ViewHolder{
+    public static class SearchHolder extends RecyclerView.ViewHolder{
         TextView title;
         TextView date;
         ImageView image;
         TextView description;
 
-        public NewsHolder (View view) {
+        public SearchHolder (View view) {
             super(view);
             title = view.findViewById(R.id.fragment_news_item_title);
             date = view.findViewById(R.id.fragment_news_item_date);
@@ -44,37 +42,47 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
     }
 
     @Override
-    public NewsHolder onCreateViewHolder(final ViewGroup parent, int viewType){
+    public SearchHolder onCreateViewHolder(final ViewGroup parent, int viewType){
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_news_item,parent,false);
-        return new NewsHolder(itemView);
+        return new SearchHolder(itemView);
     }
 
     //passe autant de fois qu'il y' a d'item//
     @Override
-    public void onBindViewHolder(final NewsHolder holder, final int position) {
+    public void onBindViewHolder(final SearchHolder holder, final int position) {
 
         //position liée à la ligne donc change toute seule//
         Doc doc = docList.get(position);
 
         if (doc.getMultimedia()!=null) {
-            Picasso.get().load("https://www.nytimes.com/" + doc.getMultimedia().get(0).getUrl()).into(holder.image);
+            if(!doc.getMultimedia().isEmpty()){
+                Picasso.get().load(doc.getMultimedia().get(0).getUrl()).into(holder.image);
+            }
         }
 
         holder.title.setText(doc.getHeadline().getMain());
-        holder.description.setText(doc.getSnippet());
+        holder.description.setText(doc.getDescription());
 
         DateFormat dateFormatInput = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            Date date = dateFormatInput.parse(doc.getPubDate());
-            DateFormat dateFormatOutput = new SimpleDateFormat("dd/MM/yy");
-            holder.date.setText(dateFormatOutput.format(date));
+            if(doc.getPubDate()!=null) {
+                Date date = dateFormatInput.parse(doc.getPubDate());
+                DateFormat dateFormatOutput = new SimpleDateFormat("dd/MM/yy");
+                holder.date.setText(dateFormatOutput.format(date));
+            }
+            else{
+                holder.date.setText("");
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
 
     }
+
+    //Picasso.get().load("https://www.nytimes.com/" + doc.getMultimedia().get(0).getUrl()).into(holder.image);
+    //        }
 
     //ITEM'S NUMBER//
     @Override

@@ -1,27 +1,57 @@
-
 package com.example.lisap.mynews.entities;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class Doc {
 
+    @SerializedName("web_url")
+    @Expose
     private String webUrl;
+    @SerializedName("snippet")
+    @Expose
     private String snippet;
-    private String printPage;
-    private Blog blog;
+    @SerializedName("abstract")
+    @Expose
+    private String description;
+    @SerializedName("section_name")
+    @Expose
+    private String section_name;
+    @SerializedName("source")
+    @Expose
     private String source;
-    private List<Multimedium> multimedia = null;
-    private Headline headline;
-    private List<Keyword> keywords = null;
     @SerializedName("pub_date")
+    @Expose
     private String pubDate;
+    @SerializedName("document_type")
+    @Expose
     private String documentType;
+    @SerializedName("type_of_material")
+    @Expose
     private String typeOfMaterial;
+    @SerializedName("_id")
+    @Expose
     private String id;
+    @SerializedName("word_count")
+    @Expose
     private Integer wordCount;
+    @SerializedName("score")
+    @Expose
     private Double score;
+    @SerializedName("headline")
+    @Expose
+    private Headline headline;
+    @SerializedName("keywords")
+    @Expose
+    private List<Keyword> keywords = null;
+    @SerializedName("multimedia")
+    @Expose
+    private List<Multimedia> multimedia = null;
+
+    public Doc() {
+    }
 
     public String getWebUrl() {
         return webUrl;
@@ -39,20 +69,24 @@ public class Doc {
         this.snippet = snippet;
     }
 
-    public String getPrintPage() {
-        return printPage;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPrintPage(String printPage) {
-        this.printPage = printPage;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Blog getBlog() {
-        return blog;
+    public void setHeadline(Headline headline) {
+        this.headline = headline;
     }
 
-    public void setBlog(Blog blog) {
-        this.blog = blog;
+    public String getSection_name() {
+        return section_name;
+    }
+
+    public void setSection_name(String section_name) {
+        this.section_name = section_name;
     }
 
     public String getSource() {
@@ -61,30 +95,6 @@ public class Doc {
 
     public void setSource(String source) {
         this.source = source;
-    }
-
-    public List<Multimedium> getMultimedia() {
-        return multimedia;
-    }
-
-    public void setMultimedia(List<Multimedium> multimedia) {
-        this.multimedia = multimedia;
-    }
-
-    public Headline getHeadline() {
-        return headline;
-    }
-
-    public void setHeadline(Headline headline) {
-        this.headline = headline;
-    }
-
-    public List<Keyword> getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(List<Keyword> keywords) {
-        this.keywords = keywords;
     }
 
     public String getPubDate() {
@@ -135,23 +145,23 @@ public class Doc {
         this.score = score;
     }
 
-    @Override
-    public String toString() {
-        return "Doc{" +
-                "webUrl='" + webUrl + '\'' +
-                ", snippet='" + snippet + '\'' +
-                ", printPage='" + printPage + '\'' +
-                ", blog=" + blog +
-                ", source='" + source + '\'' +
-                ", multimedia=" + multimedia +
-                ", headline=" + headline +
-                ", keywords=" + keywords +
-                ", pubDate='" + pubDate + '\'' +
-                ", documentType='" + documentType + '\'' +
-                ", typeOfMaterial='" + typeOfMaterial + '\'' +
-                ", id='" + id + '\'' +
-                ", wordCount=" + wordCount +
-                ", score=" + score +
-                '}';
+    public Headline getHeadline() {
+    return headline;
     }
-}
+
+    public List<Keyword> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List<Keyword> keywords) {
+        this.keywords = keywords;
+    }
+
+    public List<Multimedia> getMultimedia() {
+        return multimedia;
+    }
+
+    public void setMultimedia(List<Multimedia> multimedia) {
+        this.multimedia = multimedia;
+    }
+    }

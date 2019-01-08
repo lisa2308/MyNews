@@ -3,17 +3,17 @@ package com.example.lisap.mynews.entities;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Keyword {
+public class Multimedia {
 
-    @SerializedName("value")
+    @SerializedName("url")
     @Expose
-    private String value;
+    private String url;
 
-    public Keyword() {
-    }
-    public String getValue() {
-        return value;
+    public Multimedia() {
     }
 
+    public String getUrl() {
+        return url;
+    }
 
 }
