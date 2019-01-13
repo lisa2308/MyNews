@@ -27,6 +27,6 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mPager);
         mTabLayout.getTabAt(0).setText("TOP STORIES");
         mTabLayout.getTabAt(1).setText("MOST POPULAR");
-        mTabLayout.getTabAt(2).setText("BUISNESS");
+        mTabLayout.getTabAt(2).setText("ARTS");
     }
 }
