@@ -9,6 +9,11 @@
         android:layout_height="65dp"
         android:background="@color/lightblue500">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/baseline_keyboard_backspace_black_18dp"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
