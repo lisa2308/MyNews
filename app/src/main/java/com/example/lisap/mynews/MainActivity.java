@@ -4,6 +4,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //CREATE ADAPTER FOR VIEWPAGER//
         mAdapter = new FragmentNewsViewPager(getSupportFragmentManager());
@@ -29,4 +32,14 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.getTabAt(1).setText("MOST POPULAR");
         mTabLayout.getTabAt(2).setText("ARTS");
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_menu, menu);
+
+        // return true so that the menu pop up is opened
+        return true;
+    }
+
 }
