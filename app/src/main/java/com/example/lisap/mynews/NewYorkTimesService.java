@@ -17,6 +17,6 @@ public interface NewYorkTimesService {
     @GET("svc/topstories/v2/home.json?api-key=b5e7d03283ad41eea804c42ecd13e541")
     Call<Root> getTopStories();
 
-    @GET("svc/mostpopular/v2/mostviewed/World/7.json?api-key=b5e7d03283ad41eea804c42ecd13e541")
+    @GET("svc/mostpopular/v2/viewed/1.json?api-key=b5e7d03283ad41eea804c42ecd13e541")
     Call<Root> getMostPopular();
 }
