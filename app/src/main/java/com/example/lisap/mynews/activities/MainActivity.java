@@ -1,11 +1,16 @@
-package com.example.lisap.mynews;
+package com.example.lisap.mynews.activities;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+
+import com.example.lisap.mynews.R;
+import com.example.lisap.mynews.fragments.FragmentNewsViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,4 +47,31 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        Intent i;
+        switch (item.getItemId()){
+            case R.id.menu_search:
+                i = new Intent(this,SearchSettingsActivity.class);
+                i.putExtra("isSearch", true);
+                startActivity(i);
+                return true;
+            case R.id.menu_notification:
+                i = new Intent(this,SearchSettingsActivity.class);
+                i.putExtra("isSearch", false);
+                startActivity(i);
+                return true;
+            case R.id.menu_help:
+                i = new Intent(this, HelpActivity.class);
+                startActivity(i);
+                return true;
+            case R.id.menu_about:
+                i = new Intent(this, AboutActivity.class);
+                startActivity(i);
+                return true;
+
+            default:
+                return true;
+        }
+    }
 }

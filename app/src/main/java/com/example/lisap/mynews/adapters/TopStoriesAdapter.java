@@ -1,4 +1,4 @@
-package com.example.lisap.mynews;
+package com.example.lisap.mynews.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.lisap.mynews.R;
 import com.example.lisap.mynews.entities.Result;
 import com.squareup.picasso.Picasso;
 
@@ -16,21 +17,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.MostPopularHolder>{
+public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.TopStoriesHolder>{
 
     List<Result> resultList;
 
-    public MostPopularAdapter(List<Result> resultList){
+    public TopStoriesAdapter(List<Result> resultList){
         this.resultList = resultList;
     }
 
-    public static class MostPopularHolder extends RecyclerView.ViewHolder{
+    public static class TopStoriesHolder extends RecyclerView.ViewHolder{
         TextView title;
         TextView date;
         ImageView image;
         TextView description;
 
-        public MostPopularHolder (View view) {
+        public TopStoriesHolder (View view) {
             super(view);
             title = view.findViewById(R.id.fragment_news_item_title);
             date = view.findViewById(R.id.fragment_news_item_date);
@@ -42,22 +43,22 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
     }
 
     @Override
-    public MostPopularHolder onCreateViewHolder(final ViewGroup parent, int viewType){
+    public TopStoriesHolder onCreateViewHolder(final ViewGroup parent, int viewType){
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_news_item,parent,false);
-        return new MostPopularHolder(itemView);
+        return new TopStoriesHolder(itemView);
     }
 
     //passe autant de fois qu'il y' a d'item//
     @Override
-    public void onBindViewHolder(final MostPopularHolder holder, final int position) {
+    public void onBindViewHolder(final TopStoriesHolder holder, final int position) {
 
         //position liée à la ligne donc change toute seule//
         Result result = resultList.get(position);
 
-        if (result.getMedia()!=null) {
-            if(!result.getMedia().isEmpty()){
-                Picasso.get().load(result.getMedia().get(0).getMetaMedia().get(0).getUrl()).into(holder.image);
+        if (result.getMultimedia()!=null) {
+            if(!result.getMultimedia().isEmpty()){
+                Picasso.get().load(result.getMultimedia().get(0).getUrl()).into(holder.image);
             }
         }
 
@@ -66,14 +67,9 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
 
         DateFormat dateFormatInput = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            if(result.getPublishedDate()!=null) {
-                Date date = dateFormatInput.parse(result.getPublishedDate());
-                DateFormat dateFormatOutput = new SimpleDateFormat("dd/MM/yy");
-                holder.date.setText(dateFormatOutput.format(date));
-            }
-            else{
-                holder.date.setText("");
-            }
+            Date date = dateFormatInput.parse(result.getPublishedDate());
+            DateFormat dateFormatOutput = new SimpleDateFormat("dd/MM/yy");
+            holder.date.setText(dateFormatOutput.format(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -81,7 +77,7 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
 
     }
 
-    //Picasso.get().load("https://www.nytimes.com/" + doc.getMultimedia().get(0).getUrl()).into(holder.image);
+    //Picasso.get().load("https://www.nytimes.com/" + result.getMultimedia().get(0).getUrl()).into(holder.image);
     //        }
 
     //ITEM'S NUMBER//

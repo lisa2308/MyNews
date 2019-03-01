@@ -1,13 +1,14 @@
-package com.example.lisap.mynews;
+package com.example.lisap.mynews.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class SearchSettingsActivity extends AppCompatActivity {
+import com.example.lisap.mynews.R;
+
+public class HelpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_settings);
+        setContentView(R.layout.activity_help);
     }
-
 }

@@ -1,4 +1,4 @@
-package com.example.lisap.mynews;
+package com.example.lisap.mynews.utils;
 
 import com.example.lisap.mynews.entities.Root;
 import retrofit2.Call;
@@ -11,6 +11,11 @@ public interface NewYorkTimesService {
     //&q=query
     @GET("svc/search/v2/articlesearch.json?api-key=b5e7d03283ad41eea804c42ecd13e541")
     Call<Root> getSearch(@Query("q") String query);
+
+    //fq=
+    @GET("svc/search/v2/articlesearch.json?api-key=b5e7d03283ad41eea804c42ecd13e541")
+    Call<Root> getSearchWithCategories(@Query("q") String query, @Query("fq") String categories);
+
     //Url qui va etre séparée en 2, la 1ère partie on utilise tt le temps mais la 2 sera compilable ex "search, top stories, most popular"
     //https://api.nytimes.com/
 

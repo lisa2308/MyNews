@@ -1,4 +1,4 @@
-package com.example.lisap.mynews;
+package com.example.lisap.mynews.fragments;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

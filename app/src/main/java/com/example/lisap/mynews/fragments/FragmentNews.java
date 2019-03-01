@@ -1,4 +1,4 @@
-package com.example.lisap.mynews;
+package com.example.lisap.mynews.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.lisap.mynews.adapters.MostPopularAdapter;
+import com.example.lisap.mynews.utils.NewYorkTimesService;
+import com.example.lisap.mynews.R;
+import com.example.lisap.mynews.adapters.SearchAdapter;
+import com.example.lisap.mynews.adapters.TopStoriesAdapter;
 import com.example.lisap.mynews.entities.Root;
 
 import retrofit2.Call;
@@ -111,7 +116,7 @@ public class FragmentNews extends Fragment {
             });
         }
         else {
-            Call<Root> rootCall = service.getSearch("Business");
+            Call<Root> rootCall = service.getSearch("Arts");
             rootCall.enqueue(new Callback<Root>() {
                 @Override
                 public void onResponse(Call<Root> call, Response<Root> response) {
