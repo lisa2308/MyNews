@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.example.lisap.mynews.R;
+import com.example.lisap.mynews.adapters.SearchResultAdapter;
 import com.example.lisap.mynews.adapters.TopStoriesAdapter;
 import com.example.lisap.mynews.entities.Root;
 import com.example.lisap.mynews.utils.NewYorkTimesService;
@@ -27,6 +28,9 @@ public class SearchResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result);
         String q = getIntent().getExtras().getString("q");
         String fq = getIntent().getExtras().getString("fq");
+        String begin = getIntent().getExtras().getString("begin");
+        String end = getIntent().getExtras().getString("end");
+
         Toast.makeText(this,q + " " + fq, Toast.LENGTH_LONG).show();
 
         mRecyclerView = findViewById(R.id.activity_search_result_recycler_view);
@@ -37,19 +41,20 @@ public class SearchResultActivity extends AppCompatActivity {
                 .build();
         final NewYorkTimesService service = retrofit.create(NewYorkTimesService.class);
 
-        Call<Root> rootCall = service.getSearchWithCategories(q, fq);
+        Call<Root> rootCall = service.getSearchWithCategories(q, fq, begin, end);
         rootCall.enqueue(new Callback<Root>() {
             @Override
             public void onResponse(Call<Root> call, Response<Root> response) {
                 Root root = response.body();
                 //CREATE RECYCLER ADAPTER//
-               /* SearchResultAdapter searchResultAdapter = null;
+
+               SearchResultAdapter searchResultAdapter = null;
                 if (root != null) {
-                    searchResultAdapter = new SearchResultAdapter(root.getResults());
+                    searchResultAdapter = new SearchResultAdapter(root.getResponse().getDocs());
                     //ASSOCIATE ADAPTER WITH RECYCLER//
-                    mRecyclerView.setAdapter(topStoriesAdapter);
-                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                }*/
+                    mRecyclerView.setAdapter(searchResultAdapter);
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(SearchResultActivity.this));
+                }
             }
 
             @Override

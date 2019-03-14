@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lisap.mynews.R;
-import com.example.lisap.mynews.entities.Result;
+import com.example.lisap.mynews.entities.Doc;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -19,19 +19,19 @@ import java.util.List;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.SearchResultHolder>{
 
-    List<Result> resultList;
+    List<Doc> docList;
 
-    public SearchResultAdapter (List<Result> resultList){
-        this.resultList = resultList;
+    public SearchResultAdapter (List<Doc> docList){
+        this.docList = docList;
     }
 
     public static class SearchResultHolder extends RecyclerView.ViewHolder{
-        /*TextView title;
+        TextView title;
         TextView date;
         ImageView image;
         TextView description;
 
-        public MostPopularHolder (View view) {
+        public SearchResultHolder (View view) {
             super(view);
             title = view.findViewById(R.id.fragment_news_item_title);
             date = view.findViewById(R.id.fragment_news_item_date);
@@ -43,32 +43,32 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     }
 
     @Override
-    public MostPopularHolder onCreateViewHolder(final ViewGroup parent, int viewType){
+    public SearchResultHolder onCreateViewHolder(final ViewGroup parent, int viewType){
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_news_item,parent,false);
-        return new MostPopularHolder(itemView);
+        return new SearchResultHolder(itemView);
     }
 
     //passe autant de fois qu'il y' a d'item//
     @Override
-    public void onBindViewHolder(final MostPopularHolder holder, final int position) {
+    public void onBindViewHolder(final SearchResultHolder holder, final int position) {
 
         //position liée à la ligne donc change toute seule//
-        Result result = resultList.get(position);
+        Doc doc = docList.get(position);
 
-        if (result.getMedia()!=null) {
-            if(!result.getMedia().isEmpty()){
-                Picasso.get().load(result.getMedia().get(0).getMetaMedia().get(0).getUrl()).into(holder.image);
+        if (doc.getMultimedia()!=null) {
+            if(!doc.getMultimedia().isEmpty()){
+                Picasso.get().load("https://www.nytimes.com/" + doc.getMultimedia().get(0).getUrl()).into(holder.image);
             }
         }
 
-        holder.title.setText(result.getTitle());
-        holder.description.setText(result.getDescription());
+        holder.title.setText(doc.getHeadline().getMain());
+        holder.description.setText(doc.getSnippet());
 
         DateFormat dateFormatInput = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            if(result.getPublishedDate()!=null) {
-                Date date = dateFormatInput.parse(result.getPublishedDate());
+            if(doc.getPubDate()!=null) {
+                Date date = dateFormatInput.parse(doc.getPubDate());
                 DateFormat dateFormatOutput = new SimpleDateFormat("dd/MM/yy");
                 holder.date.setText(dateFormatOutput.format(date));
             }
@@ -88,6 +88,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     //ITEM'S NUMBER//
     @Override
     public int getItemCount(){
-        return resultList.size();
+        return docList.size();
     }
-}*/
+}
