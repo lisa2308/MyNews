@@ -1,5 +1,6 @@
 package com.example.lisap.mynews.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,12 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.lisap.mynews.activities.WebArticleActivity;
 import com.example.lisap.mynews.adapters.MostPopularAdapter;
+import com.example.lisap.mynews.entities.Doc;
+import com.example.lisap.mynews.entities.Result;
 import com.example.lisap.mynews.utils.NewYorkTimesService;
 import com.example.lisap.mynews.R;
 import com.example.lisap.mynews.adapters.SearchAdapter;
 import com.example.lisap.mynews.adapters.TopStoriesAdapter;
 import com.example.lisap.mynews.entities.Root;
+import com.example.lisap.mynews.utils.RecyclerViewHolderListener;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,7 +76,16 @@ public class FragmentNews extends Fragment {
                     //CREATE RECYCLER ADAPTER//
                     TopStoriesAdapter topStoriesAdapter = null;
                     if (root != null) {
-                        topStoriesAdapter = new TopStoriesAdapter(root.getResults());
+                        RecyclerViewHolderListener listener = new RecyclerViewHolderListener() {
+                            @Override
+                            public void onItemClicked(RecyclerView.ViewHolder viewHolder, Object item, int pos) {
+                                Result result = (Result) item;
+                                Intent i = new Intent(getActivity(), WebArticleActivity.class);
+                                i.putExtra("url", result.getUrl());
+                                startActivity(i);
+                            }
+                        };
+                        topStoriesAdapter = new TopStoriesAdapter(root.getResults(), listener);
 
                         //ASSOCIATE ADAPTER WITH RECYCLER//
                         mRecyclerView.setAdapter(topStoriesAdapter);
@@ -99,7 +113,17 @@ public class FragmentNews extends Fragment {
                     //CREATE RECYCLER ADAPTER//
                     MostPopularAdapter mostPopularAdapter = null;
                     if (root != null) {
-                        mostPopularAdapter = new MostPopularAdapter(root.getResults());
+                        RecyclerViewHolderListener listener = new RecyclerViewHolderListener() {
+                            @Override
+                            public void onItemClicked(RecyclerView.ViewHolder viewHolder, Object item, int pos) {
+                                Result result = (Result) item;
+                                Intent i = new Intent(getActivity(), WebArticleActivity.class);
+                                i.putExtra("url", result.getUrl());
+                                startActivity(i);
+                            }
+                        };
+                        mostPopularAdapter = new MostPopularAdapter(root.getResults(), listener);
+
 
                         //ASSOCIATE ADAPTER WITH RECYCLER//
                         mRecyclerView.setAdapter(mostPopularAdapter);
@@ -125,7 +149,16 @@ public class FragmentNews extends Fragment {
                     //CREATE RECYCLER ADAPTER//
                     SearchAdapter searchAdapter = null;
                     if (root != null) {
-                        searchAdapter = new SearchAdapter(root.getResponse().getDocs());
+                        RecyclerViewHolderListener listener = new RecyclerViewHolderListener() {
+                            @Override
+                            public void onItemClicked(RecyclerView.ViewHolder viewHolder, Object item, int pos) {
+                                Doc doc = (Doc) item;
+                                Intent i = new Intent(getActivity(), WebArticleActivity.class);
+                                i.putExtra("url", doc.getWebUrl());
+                                startActivity(i);
+                            }
+                        };
+                        searchAdapter = new SearchAdapter(root.getResponse().getDocs(), listener);
 
                         //ASSOCIATE ADAPTER WITH RECYCLER//
                         mRecyclerView.setAdapter(searchAdapter);

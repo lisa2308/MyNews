@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.lisap.mynews.R;
 import com.example.lisap.mynews.entities.Doc;
+import com.example.lisap.mynews.utils.RecyclerViewHolderListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -20,9 +21,11 @@ import java.util.List;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHolder>{
 
     List<Doc> docList;
+    RecyclerViewHolderListener listener;
 
-    public SearchAdapter(List<Doc> docList){
+    public SearchAdapter(List<Doc> docList, RecyclerViewHolderListener listener){
         this.docList = docList;
+        this.listener = listener;
     }
 
     public static class SearchHolder extends RecyclerView.ViewHolder{
@@ -54,7 +57,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     public void onBindViewHolder(final SearchHolder holder, final int position) {
 
         //position liée à la ligne donc change toute seule//
-        Doc doc = docList.get(position);
+        final Doc doc = docList.get(position);
 
         if (doc.getMultimedia()!=null) {
             if(!doc.getMultimedia().isEmpty()){
@@ -78,6 +81,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClicked(holder,doc,position);
+            }
+        });
 
 
     }

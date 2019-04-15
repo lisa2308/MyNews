@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.lisap.mynews.R;
 import com.example.lisap.mynews.entities.Result;
+import com.example.lisap.mynews.utils.RecyclerViewHolderListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -20,9 +21,11 @@ import java.util.List;
 public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.TopStoriesHolder>{
 
     List<Result> resultList;
+    RecyclerViewHolderListener listener;
 
-    public TopStoriesAdapter(List<Result> resultList){
+    public TopStoriesAdapter(List<Result> resultList, RecyclerViewHolderListener listener){
         this.resultList = resultList;
+        this.listener = listener;
     }
 
     public static class TopStoriesHolder extends RecyclerView.ViewHolder{
@@ -54,7 +57,7 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.To
     public void onBindViewHolder(final TopStoriesHolder holder, final int position) {
 
         //position liée à la ligne donc change toute seule//
-        Result result = resultList.get(position);
+        final Result result = resultList.get(position);
 
         if (result.getMultimedia()!=null) {
             if(!result.getMultimedia().isEmpty()){
@@ -74,7 +77,12 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.To
             e.printStackTrace();
         }
 
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClicked(holder,result,position);
+            }
+        });
     }
 
     //Picasso.get().load("https://www.nytimes.com/" + result.getMultimedia().get(0).getUrl()).into(holder.image);

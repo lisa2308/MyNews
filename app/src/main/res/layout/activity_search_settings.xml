@@ -143,7 +143,7 @@
         android:layout_marginLeft="20dp"
         android:background="@color/colorPrimary"
         android:text="Search"
-        android:textColor="@color/wight"/>
+        android:textColor="@color/white"/>
 
     <LinearLayout
         android:id="@+id/activity_search_settings_linear_notif"

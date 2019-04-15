@@ -1,9 +1,12 @@
 package com.example.lisap.mynews.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.lisap.mynews.R;
@@ -11,6 +14,8 @@ import com.example.lisap.mynews.adapters.SearchResultAdapter;
 import com.example.lisap.mynews.adapters.TopStoriesAdapter;
 import com.example.lisap.mynews.entities.Root;
 import com.example.lisap.mynews.utils.NewYorkTimesService;
+
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,8 +36,6 @@ public class SearchResultActivity extends AppCompatActivity {
         String begin = getIntent().getExtras().getString("begin");
         String end = getIntent().getExtras().getString("end");
 
-        Toast.makeText(this,q + " " + fq, Toast.LENGTH_LONG).show();
-
         mRecyclerView = findViewById(R.id.activity_search_result_recycler_view);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -50,10 +53,26 @@ public class SearchResultActivity extends AppCompatActivity {
 
                SearchResultAdapter searchResultAdapter = null;
                 if (root != null) {
-                    searchResultAdapter = new SearchResultAdapter(root.getResponse().getDocs());
-                    //ASSOCIATE ADAPTER WITH RECYCLER//
-                    mRecyclerView.setAdapter(searchResultAdapter);
-                    mRecyclerView.setLayoutManager(new LinearLayoutManager(SearchResultActivity.this));
+                    if (!root.getResponse().getDocs().isEmpty()) {
+                        searchResultAdapter = new SearchResultAdapter(root.getResponse().getDocs());
+                        //ASSOCIATE ADAPTER WITH RECYCLER//
+                        mRecyclerView.setAdapter(searchResultAdapter);
+                        mRecyclerView.setLayoutManager(new LinearLayoutManager(SearchResultActivity.this));
+                    }
+                    else {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(SearchResultActivity.this);
+                        alert.setMessage("Please make a new request");
+                        alert.setTitle("No Results");
+
+                        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                onBackPressed();
+
+                            }
+                        });
+                        alert.show();
+
+                    }
                 }
             }
 

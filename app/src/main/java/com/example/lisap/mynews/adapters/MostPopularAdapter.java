@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.lisap.mynews.R;
 import com.example.lisap.mynews.entities.Result;
+import com.example.lisap.mynews.utils.RecyclerViewHolderListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -20,9 +21,12 @@ import java.util.List;
 public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.MostPopularHolder>{
 
     List<Result> resultList;
+    RecyclerViewHolderListener listener;
 
-    public MostPopularAdapter(List<Result> resultList){
+
+    public MostPopularAdapter(List<Result> resultList, RecyclerViewHolderListener listener){
         this.resultList = resultList;
+        this.listener = listener;
     }
 
     public static class MostPopularHolder extends RecyclerView.ViewHolder{
@@ -54,7 +58,7 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
     public void onBindViewHolder(final MostPopularHolder holder, final int position) {
 
         //position liée à la ligne donc change toute seule//
-        Result result = resultList.get(position);
+        final Result result = resultList.get(position);
 
         if (result.getMedia()!=null) {
             if(!result.getMedia().isEmpty()){
@@ -78,6 +82,13 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClicked(holder,result,position);
+            }
+        });
 
 
     }

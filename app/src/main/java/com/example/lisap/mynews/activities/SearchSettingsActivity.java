@@ -29,18 +29,21 @@ public class SearchSettingsActivity extends AppCompatActivity {
     EditText editTextQuery;
     CheckBox cbArts, cbBusiness, cbEntrepreneurs, cbPolitics, cbSports, cbTravel;
     TextInputEditText beginDate, endDate;
+    String beginDateGoodFormat, endDateGoodFormat;
 
     Calendar calendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener beginDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            beginDate.setText(year+ String.format("%02d", month) + String.format("%02d", dayOfMonth));
+            beginDate.setText(String.format("%02d", dayOfMonth) + "/" + String.format("%02d", month) + "/" + year);
+            beginDateGoodFormat = year+ String.format("%02d", month) + String.format("%02d", dayOfMonth);
         }
     };
     DatePickerDialog.OnDateSetListener endDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            endDate.setText(year+ String.format("%02d", month) + String.format("%02d", dayOfMonth));
+            endDate.setText(String.format("%02d", dayOfMonth) + "/" + String.format("%02d", month) + "/" + year);
+            endDateGoodFormat = year+ String.format("%02d", month) + String.format("%02d", dayOfMonth);
         }
     };
 
@@ -138,15 +141,13 @@ public class SearchSettingsActivity extends AppCompatActivity {
                     fq += "travel+";
                 }
 
-                String begin = beginDate.getText().toString();
-                String end =  endDate.getText().toString();
 
                 if(!q.isEmpty()) {
                     Intent i = new Intent(SearchSettingsActivity.this, SearchResultActivity.class);
                     i.putExtra("q", q);
                     i.putExtra("fq", fq);
-                    i.putExtra("begin", begin);
-                    i.putExtra("end", end);
+                    i.putExtra("begin", beginDateGoodFormat);
+                    i.putExtra("end", endDateGoodFormat);
                     startActivity(i);
                 }
                 else {
