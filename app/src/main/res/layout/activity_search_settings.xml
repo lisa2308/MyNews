@@ -158,7 +158,7 @@
             android:layout_height="wrap_content"
            android:text="Enable notifications(once per day)" />
         <Switch
-            android:id="@+id/setting_switch"
+            android:id="@+id/activity_search_setting_switch"
             android:layout_width="match_parent"
             android:layout_height="20dp" />
     </LinearLayout>

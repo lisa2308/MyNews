@@ -1,22 +1,29 @@
 package com.example.lisap.mynews.activities;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.example.lisap.mynews.R;
+import com.example.lisap.mynews.utils.AlarmReceiver;
 
 import java.util.Calendar;
 
@@ -30,6 +37,10 @@ public class SearchSettingsActivity extends AppCompatActivity {
     CheckBox cbArts, cbBusiness, cbEntrepreneurs, cbPolitics, cbSports, cbTravel;
     TextInputEditText beginDate, endDate;
     String beginDateGoodFormat, endDateGoodFormat;
+    Switch notifSwitch;
+    private AlarmManager alarmMgr;
+    private PendingIntent alarmIntent;
+
 
     Calendar calendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener beginDateListener = new DatePickerDialog.OnDateSetListener() {
@@ -101,6 +112,7 @@ public class SearchSettingsActivity extends AppCompatActivity {
         cbPolitics = findViewById(R.id.ass_checkbox_politics);
         cbSports = findViewById(R.id.ass_checkbox_sports);
         cbTravel = findViewById(R.id.ass_checkbox_travel);
+        notifSwitch = findViewById(R.id.activity_search_setting_switch);
     }
 
     private void setupSearchVisibility(){
@@ -113,6 +125,29 @@ public class SearchSettingsActivity extends AppCompatActivity {
             setTitle("Notifications");
             button.setVisibility(View.GONE);
             linearDate.setVisibility(View.GONE);
+
+            alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(this, AlarmReceiver.class);
+            alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+            notifSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        //Set the alarm to start at approximately 10:00 a.m.
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(System.currentTimeMillis());
+                        calendar.set(Calendar.HOUR_OF_DAY, 10);
+                        // With setInexactRepeating(), you have to use one of the AlarmManager interval
+                        // constants--in this case, AlarmManager.INTERVAL_DAY.
+                        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                                AlarmManager.INTERVAL_DAY, alarmIntent);
+                    }
+                    else {
+                        alarmMgr.cancel(alarmIntent);
+                    }
+                }
+            });
         }
     }
 
