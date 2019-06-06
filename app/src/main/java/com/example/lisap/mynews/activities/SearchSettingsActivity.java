@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.Layout;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,9 +26,12 @@ import android.widget.Toast;
 
 import com.example.lisap.mynews.R;
 import com.example.lisap.mynews.utils.AlarmReceiver;
+import com.example.lisap.mynews.utils.Constants;
+import com.example.lisap.mynews.utils.SharedPreferencesManager;
 
 import java.util.Calendar;
 
+//Search, Notification//
 public class SearchSettingsActivity extends AppCompatActivity {
     LinearLayout linearNotifications;
     LinearLayout linearSearch;
@@ -42,6 +47,7 @@ public class SearchSettingsActivity extends AppCompatActivity {
     private PendingIntent alarmIntent;
 
 
+    //Listener when date is selected//
     Calendar calendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener beginDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -63,6 +69,7 @@ public class SearchSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_settings);
         initViews();
+        //Show or Hide layouts Search or notification//
         setupSearchVisibility();
         setSearchButtonListener();
 
@@ -113,6 +120,14 @@ public class SearchSettingsActivity extends AppCompatActivity {
         cbSports = findViewById(R.id.ass_checkbox_sports);
         cbTravel = findViewById(R.id.ass_checkbox_travel);
         notifSwitch = findViewById(R.id.activity_search_setting_switch);
+
+        editTextQuery.setText(SharedPreferencesManager.getString(this, Constants.SEARCH_QUERY_KEY));
+        cbArts.setChecked(SharedPreferencesManager.getBoolean(this, Constants.CATEGORIES_ARTS_CHECKED_KEY));
+        cbBusiness.setChecked(SharedPreferencesManager.getBoolean(this, Constants.CATEGORIES_BUSINESS_CHECKED_KEY));
+        cbEntrepreneurs.setChecked(SharedPreferencesManager.getBoolean(this, Constants.CATEGORIES_ENTREPRENEURS_CHECKED_KEY));
+        cbPolitics.setChecked(SharedPreferencesManager.getBoolean(this, Constants.CATEGORIES_POLITICS_CHECKED_KEY));
+        cbSports.setChecked(SharedPreferencesManager.getBoolean(this, Constants.CATEGORIES_SPORTS_CHECKED_KEY));
+        cbTravel.setChecked(SharedPreferencesManager.getBoolean(this, Constants.CATEGORIES_TRAVEL_CHECKED_KEY));
     }
 
     private void setupSearchVisibility(){
@@ -125,6 +140,9 @@ public class SearchSettingsActivity extends AppCompatActivity {
             setTitle("Notifications");
             button.setVisibility(View.GONE);
             linearDate.setVisibility(View.GONE);
+            notifSwitch.setChecked(SharedPreferencesManager.getBoolean(this, Constants.NOTIFICATIONS_CHECKED_KEY));
+            setSearchQueryListener();
+            setCheckBoxListener();
 
             alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(this, AlarmReceiver.class);
@@ -133,22 +151,148 @@ public class SearchSettingsActivity extends AppCompatActivity {
             notifSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        //Set the alarm to start at approximately 10:00 a.m.
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTimeInMillis(System.currentTimeMillis());
-                        calendar.set(Calendar.HOUR_OF_DAY, 10);
-                        // With setInexactRepeating(), you have to use one of the AlarmManager interval
-                        // constants--in this case, AlarmManager.INTERVAL_DAY.
-                        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                                AlarmManager.INTERVAL_DAY, alarmIntent);
+                    // check if search query term is not empty
+                    if(editTextQuery.getText().toString().isEmpty()){
+                        notifSwitch.setChecked(false);
+                        Toast.makeText(SearchSettingsActivity.this, "Veuillez renseigner un mot clé pour votre recherche", Toast.LENGTH_LONG).show();
+                    }
+
+                    // check if categories are not empty
+                    if(getFqString().isEmpty()){
+                        notifSwitch.setChecked(false);
+                        Toast.makeText(SearchSettingsActivity.this, "Veuillez cocher au moins une catégorie", Toast.LENGTH_LONG).show();
+                    }
+
+                    // on enregistre la valeur du bouton switch (notifications ON ou OFF)
+                    SharedPreferencesManager.putBoolean(
+                            SearchSettingsActivity.this,
+                            Constants.NOTIFICATIONS_CHECKED_KEY,
+                            isChecked
+                    );
+
+                    if(isChecked) {
+                        enableAlarmManager();
                     }
                     else {
-                        alarmMgr.cancel(alarmIntent);
+                        disableAlarmManager();
                     }
                 }
             });
         }
+    }
+
+    private void enableAlarmManager() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                60000, alarmIntent);
+    }
+
+    private void disableAlarmManager() {
+        alarmMgr.cancel(alarmIntent);
+    }
+
+    private void setSearchQueryListener() {
+        editTextQuery.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                SharedPreferencesManager.putString(SearchSettingsActivity.this, Constants.SEARCH_QUERY_KEY, s.toString());
+
+                if(editTextQuery.getText().toString().isEmpty() && notifSwitch.isChecked()){
+                    notifSwitch.setChecked(false);
+                    Toast.makeText(SearchSettingsActivity.this, "Veuillez renseigner un mot clé pour votre recherche", Toast.LENGTH_LONG).show();
+                }
+
+                if(notifSwitch.isChecked()) {
+                    enableAlarmManager();
+                }
+                else {
+                    disableAlarmManager();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    private void setCheckBoxListener() {
+        CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                switch(buttonView.getId()) {
+                    case R.id.ass_checkbox_arts:
+                        SharedPreferencesManager.putBoolean(SearchSettingsActivity.this, Constants.CATEGORIES_ARTS_CHECKED_KEY, isChecked);
+                        break;
+                    case R.id.ass_checkbox_business:
+                        SharedPreferencesManager.putBoolean(SearchSettingsActivity.this, Constants.CATEGORIES_BUSINESS_CHECKED_KEY, isChecked);
+                        break;
+                    case R.id.ass_checkbox_entrepreneurs:
+                        SharedPreferencesManager.putBoolean(SearchSettingsActivity.this, Constants.CATEGORIES_ENTREPRENEURS_CHECKED_KEY, isChecked);
+                        break;
+                    case R.id.ass_checkbox_politics:
+                        SharedPreferencesManager.putBoolean(SearchSettingsActivity.this, Constants.CATEGORIES_POLITICS_CHECKED_KEY, isChecked);
+                        break;
+                    case R.id.ass_checkbox_sports:
+                        SharedPreferencesManager.putBoolean(SearchSettingsActivity.this, Constants.CATEGORIES_SPORTS_CHECKED_KEY, isChecked);
+                        break;
+                    case R.id.ass_checkbox_travel:
+                        SharedPreferencesManager.putBoolean(SearchSettingsActivity.this, Constants.CATEGORIES_TRAVEL_CHECKED_KEY, isChecked);
+                        break;
+                }
+
+                SharedPreferencesManager.putString(SearchSettingsActivity.this, Constants.CATEGORIES_QUERY_KEY, getFqString());
+
+                if(getFqString().isEmpty() && notifSwitch.isChecked()){
+                    notifSwitch.setChecked(false);
+                    Toast.makeText(SearchSettingsActivity.this, "Veuillez cocher au moins une catégorie", Toast.LENGTH_LONG).show();
+                }
+
+                if(notifSwitch.isChecked()) {
+                    enableAlarmManager();
+                }
+                else {
+                    disableAlarmManager();
+                }
+            }
+        };
+        cbArts.setOnCheckedChangeListener(listener);
+        cbBusiness.setOnCheckedChangeListener(listener);
+        cbEntrepreneurs.setOnCheckedChangeListener(listener);
+        cbPolitics.setOnCheckedChangeListener(listener);
+        cbSports.setOnCheckedChangeListener(listener);
+        cbTravel.setOnCheckedChangeListener(listener);
+    }
+
+    private String getFqString() {
+        String finalOutput = "";
+        if(cbArts.isChecked()){
+            finalOutput += "arts+";
+        }
+        if(cbBusiness.isChecked()){
+            finalOutput += "business+";
+        }
+        if(cbEntrepreneurs.isChecked()){
+            finalOutput += "entrepreneurs+";
+        }
+        if(cbPolitics.isChecked()){
+            finalOutput += "politics+";
+        }
+        if(cbSports.isChecked()){
+            finalOutput += "sports+";
+        }
+        if(cbTravel.isChecked()){
+            finalOutput += "travel+";
+        }
+        return finalOutput;
     }
 
     private void setSearchButtonListener(){
@@ -156,26 +300,7 @@ public class SearchSettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String q = editTextQuery.getText().toString();
-                String fq = "";
-                if(cbArts.isChecked()){
-                    fq += "arts+";
-                }
-                if(cbBusiness.isChecked()){
-                    fq += "business+";
-                }
-                if(cbEntrepreneurs.isChecked()){
-                    fq += "entrepreneurs+";
-                }
-                if(cbPolitics.isChecked()){
-                    fq += "politics+";
-                }
-                if(cbSports.isChecked()){
-                    fq += "sports+";
-                }
-                if(cbTravel.isChecked()){
-                    fq += "travel+";
-                }
-
+                String fq = getFqString();
 
                 if(!q.isEmpty()) {
                     Intent i = new Intent(SearchSettingsActivity.this, SearchResultActivity.class);

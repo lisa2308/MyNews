@@ -31,6 +31,7 @@ public class SearchResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
+        //Get Intent data//
         String q = getIntent().getExtras().getString("q");
         String fq = getIntent().getExtras().getString("fq");
         String begin = getIntent().getExtras().getString("begin");
@@ -49,8 +50,8 @@ public class SearchResultActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Root> call, Response<Root> response) {
                 Root root = response.body();
-                //CREATE RECYCLER ADAPTER//
 
+                //CREATE RECYCLER ADAPTER//
                SearchResultAdapter searchResultAdapter = null;
                 if (root != null) {
                     if (!root.getResponse().getDocs().isEmpty()) {

@@ -22,18 +22,17 @@ import com.example.lisap.mynews.fragments.FragmentNewsViewPager;
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener{
 
-
     private FragmentNewsViewPager mAdapter;
     private ViewPager mPager;
     private TabLayout mTabLayout;
     private DrawerLayout drawerLayout;
     private NavigationView mNavigationView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //setup toolbar//
         Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
         setSupportActionBar(toolbar);
@@ -71,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
+    //Click Listener menu item//
     @Override
     public boolean onOptionsItemSelected (MenuItem item) {
         Intent i;
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    //Click Listener menu navigation drawer//
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Intent i = new Intent(MainActivity.this, SearchResultActivity.class);
