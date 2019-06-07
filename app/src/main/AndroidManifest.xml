@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_mynews"
+        android:icon="@mipmap/ic_logo_mynews"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_mynews"
+        android:roundIcon="@mipmap/ic_logo_mynews"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
