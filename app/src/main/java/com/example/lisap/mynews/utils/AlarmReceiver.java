@@ -69,7 +69,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Nouveaux articles")
-                .setContentText(nbArticles + " nouveaux articles ont été publiés aujourd'hui")
+                .setContentText(getNotifText(nbArticles))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
 
@@ -84,6 +84,15 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(1, builder.build());
+    }
+    public String getNotifText(int nbArticles){
+        if (nbArticles == 0)
+            return "Aucun article n'a été publié aujourd'hui";
+        else if(nbArticles == 1)
+            return nbArticles + " nouvel article a été publié aujourd'hui";
+        else
+            return nbArticles + " nouveaux articles ont été publiés aujourd'hui";
+
     }
 }
 

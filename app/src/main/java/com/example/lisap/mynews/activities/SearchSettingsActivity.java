@@ -52,15 +52,15 @@ public class SearchSettingsActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener beginDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            beginDate.setText(String.format("%02d", dayOfMonth) + "/" + String.format("%02d", month) + "/" + year);
-            beginDateGoodFormat = year+ String.format("%02d", month) + String.format("%02d", dayOfMonth);
+            beginDate.setText(getDateTextFormat(year,month,dayOfMonth));
+            beginDateGoodFormat = getDateNYTFormat(year,month,dayOfMonth);
         }
     };
     DatePickerDialog.OnDateSetListener endDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            endDate.setText(String.format("%02d", dayOfMonth) + "/" + String.format("%02d", month) + "/" + year);
-            endDateGoodFormat = year+ String.format("%02d", month) + String.format("%02d", dayOfMonth);
+            endDate.setText(getDateTextFormat(year,month,dayOfMonth));
+            endDateGoodFormat = getDateNYTFormat(year,month,dayOfMonth);
         }
     };
 
@@ -179,6 +179,13 @@ public class SearchSettingsActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public String getDateTextFormat (int year, int month, int dayOfMonth) {
+        return String.format("%02d", dayOfMonth) + "/" + String.format("%02d", month) + "/" + year;
+    }
+    public String getDateNYTFormat (int year, int month, int dayOfMonth) {
+        return year+ String.format("%02d", month) + String.format("%02d", dayOfMonth);
     }
 
     private void enableAlarmManager() {
