@@ -67,7 +67,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private void createNotification(Context context, int nbArticles) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_logo_mynews)
                 .setContentTitle("Nouveaux articles")
                 .setContentText(getNotifText(nbArticles))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

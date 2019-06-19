@@ -191,9 +191,10 @@ public class SearchSettingsActivity extends AppCompatActivity {
     private void enableAlarmManager() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.HOUR_OF_DAY, 11);
+        calendar.set(Calendar.MINUTE, 20);
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                60000, alarmIntent);
+                AlarmManager.INTERVAL_DAY, alarmIntent);
     }
 
     private void disableAlarmManager() {
