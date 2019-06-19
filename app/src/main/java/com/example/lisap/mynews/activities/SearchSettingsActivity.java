@@ -152,15 +152,15 @@ public class SearchSettingsActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     // check if search query term is not empty
-                    if(editTextQuery.getText().toString().isEmpty()){
+                    if(editTextQuery.getText().toString().trim().isEmpty()){
                         notifSwitch.setChecked(false);
-                        Toast.makeText(SearchSettingsActivity.this, "Veuillez renseigner un mot clé pour votre recherche", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SearchSettingsActivity.this, "Please enter a query", Toast.LENGTH_LONG).show();
                     }
 
                     // check if categories are not empty
                     if(getFqString().isEmpty()){
                         notifSwitch.setChecked(false);
-                        Toast.makeText(SearchSettingsActivity.this, "Veuillez cocher au moins une catégorie", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SearchSettingsActivity.this, "Please enter at least one category", Toast.LENGTH_LONG).show();
                     }
 
                     // on enregistre la valeur du bouton switch (notifications ON ou OFF)
