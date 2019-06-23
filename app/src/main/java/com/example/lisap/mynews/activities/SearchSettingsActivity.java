@@ -182,10 +182,10 @@ public class SearchSettingsActivity extends AppCompatActivity {
     }
 
     public String getDateTextFormat (int year, int month, int dayOfMonth) {
-        return String.format("%02d", dayOfMonth) + "/" + String.format("%02d", month) + "/" + year;
+        return String.format("%02d", dayOfMonth) + "/" + String.format("%02d", month + 1) + "/" + year;
     }
     public String getDateNYTFormat (int year, int month, int dayOfMonth) {
-        return year+ String.format("%02d", month) + String.format("%02d", dayOfMonth);
+        return year+ String.format("%02d", month + 1) + String.format("%02d", dayOfMonth);
     }
 
     private void enableAlarmManager() {
@@ -214,7 +214,7 @@ public class SearchSettingsActivity extends AppCompatActivity {
 
                 if(editTextQuery.getText().toString().isEmpty() && notifSwitch.isChecked()){
                     notifSwitch.setChecked(false);
-                    Toast.makeText(SearchSettingsActivity.this, "Veuillez renseigner un mot clé pour votre recherche", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SearchSettingsActivity.this, "Please enter a query", Toast.LENGTH_LONG).show();
                 }
 
                 if(notifSwitch.isChecked()) {
@@ -261,7 +261,7 @@ public class SearchSettingsActivity extends AppCompatActivity {
 
                 if(getFqString().isEmpty() && notifSwitch.isChecked()){
                     notifSwitch.setChecked(false);
-                    Toast.makeText(SearchSettingsActivity.this, "Veuillez cocher au moins une catégorie", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SearchSettingsActivity.this, "Please enter at least category", Toast.LENGTH_LONG).show();
                 }
 
                 if(notifSwitch.isChecked()) {

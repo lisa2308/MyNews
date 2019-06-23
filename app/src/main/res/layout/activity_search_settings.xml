@@ -76,6 +76,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:theme="@style/Checkbox"
                 android:layout_marginLeft="15dp"
                 android:text="Arts"/>
             <CheckBox
@@ -84,6 +85,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:theme="@style/Checkbox"
                 android:layout_marginRight="15dp"
                 android:text="Politics"/>
         </TableRow>
@@ -97,6 +99,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:theme="@style/Checkbox"
                 android:layout_marginLeft="15dp"
                 android:text="Business"/>
             <CheckBox
@@ -105,6 +108,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:theme="@style/Checkbox"
                 android:layout_marginRight="15dp"
                 android:text="Sports"/>
 
@@ -119,6 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="10dp"
+                android:theme="@style/Checkbox"
                 android:layout_marginLeft="15dp"
                 android:text="Entrepreneurs"/>
             <CheckBox
@@ -127,6 +132,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:theme="@style/Checkbox"
                 android:layout_marginRight="15dp"
                 android:text="Travel"/>
         </TableRow>

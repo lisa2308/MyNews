@@ -6,27 +6,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/activity_main_drawer_arts"
-            android:icon="@drawable/baseline_thumb_up_alt_black_24dp"
+            android:icon="@drawable/icons824arts"
             android:title="Arts" />
         <item
             android:id="@+id/activity_main_drawer_business"
-            android:icon="@drawable/baseline_star_black_24dp"
+            android:icon="@drawable/icons824dollars"
             android:title="Business" />
         <item
             android:id="@+id/activity_main_drawer_entrepreneurs"
-            android:icon="@drawable/baseline_portrait_black_24dp"
+            android:icon="@drawable/icons824people"
             android:title="Entrepreneurs" />
         <item
             android:id="@+id/activity_main_drawer_politics"
-            android:icon="@drawable/baseline_thumb_up_alt_black_24dp"
+            android:icon="@drawable/icons824web"
             android:title="Politics" />
         <item
             android:id="@+id/activity_main_drawer_sports"
-            android:icon="@drawable/baseline_star_black_24dp"
+            android:icon="@drawable/icons824volley"
             android:title="Sports" />
         <item
             android:id="@+id/activity_main_drawer_travel"
-            android:icon="@drawable/baseline_portrait_black_24dp"
+            android:icon="@drawable/icons824autourduglobe"
             android:title="Travel" />
     </group>
 
