@@ -2,6 +2,7 @@ package com.example.lisap.mynews.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,8 +13,10 @@ import android.widget.Toast;
 import com.example.lisap.mynews.R;
 import com.example.lisap.mynews.adapters.SearchResultAdapter;
 import com.example.lisap.mynews.adapters.TopStoriesAdapter;
+import com.example.lisap.mynews.entities.Doc;
 import com.example.lisap.mynews.entities.Root;
 import com.example.lisap.mynews.utils.NewYorkTimesService;
+import com.example.lisap.mynews.utils.RecyclerViewHolderListener;
 
 import java.util.Calendar;
 
@@ -55,7 +58,18 @@ public class SearchResultActivity extends AppCompatActivity {
                SearchResultAdapter searchResultAdapter = null;
                 if (root != null) {
                     if (!root.getResponse().getDocs().isEmpty()) {
-                        searchResultAdapter = new SearchResultAdapter(root.getResponse().getDocs());
+
+                        RecyclerViewHolderListener listener = new RecyclerViewHolderListener() {
+                            @Override
+                            public void onItemClicked(RecyclerView.ViewHolder viewHolder, Object item, int pos) {
+                                Doc doc = (Doc) item;
+                                Intent i = new Intent(SearchResultActivity.this, WebArticleActivity.class);
+                                i.putExtra("url", doc.getWebUrl());
+                                startActivity(i);
+                            }
+                        };
+
+                        searchResultAdapter = new SearchResultAdapter(root.getResponse().getDocs(),listener);
                         //ASSOCIATE ADAPTER WITH RECYCLER//
                         mRecyclerView.setAdapter(searchResultAdapter);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(SearchResultActivity.this));
