@@ -18,7 +18,7 @@ public class UnitTest {
     @Test
     public void getDateTextFormatTest() {
         String actualDate = searchSettingsActivity.getDateTextFormat(2019, 6, 10);
-        String expectedDate = "10/06/2019";
+        String expectedDate = "10/07/2019";
 
         assertEquals(expectedDate, actualDate);
     }
@@ -26,7 +26,7 @@ public class UnitTest {
     @Test
     public void getDateNYTFormatTest() {
         String actualDate = searchSettingsActivity.getDateNYTFormat(2019, 6, 10);
-        String expectedDate = "20190610";
+        String expectedDate = "20190710";
 
         assertEquals(expectedDate, actualDate);
     }
