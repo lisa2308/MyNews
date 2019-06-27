@@ -72,8 +72,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
-        <uses-library android:name="android.test.runner"
-            android:required="false" />
 
         <receiver android:name=".utils.AlarmReceiver"
             android:exported="false">
